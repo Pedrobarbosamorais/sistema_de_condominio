@@ -1,0 +1,37 @@
+from lib.interface import *
+from lib.arquivo import *
+import re
+from time import sleep
+
+arq = 'cadastros.txt'
+
+if not arquivoExiste(arq):
+    criarArquivo(arq)
+
+while True:
+    resp = menu(['Ver pessoas cadastradas', 'Cadastrar nova Pessoa', 'Sair do Sistema'])
+    
+    if resp == 1: 
+        lerArquivo(arq)
+        
+    elif resp == 2:
+       cabecalho('NOVO CADASTRO')
+       nome = str(input('Nome: '))
+       if re.search(r'\d', nome):
+            print('Erro! O nome não deve conter números.')
+            nome = str(input('Nome: '))
+       idade = leiaInt('Idade: ')
+       cpf = int(input('cpf:'))
+       if cpf<= 12 or cpf>13:
+           print('Erro! O cpf não deve ter mwenos de 12 números.')
+           cpf =int(input('cpf:'))
+    apartamento = int(input('apartamento:'))
+    data_de_nascimento=int(input('data de nascimento:'))
+    cadastrar(arq={arq}, nome={nome}, idade={idade}, cpf={cpf}, data_de_nascimento={data_de_nascimento}, apartamento={apartamento})
+    if resp == 3:
+     cabecalho('Saindo do sistema... Até logo!')
+     sleep(1)
+     break
+    else:
+        cabecalho('ERRO, coloque informação correta')
+        sleep(2)
